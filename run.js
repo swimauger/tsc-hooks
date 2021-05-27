@@ -6,7 +6,7 @@ const PACKAGE_JSON = require(path.resolve(PROJECT_ROOT, 'package.json'));
 const script = require(path.resolve(__dirname, 'scripts', process.argv[2]));
 const isGlobalScript = !(PACKAGE_JSON.dependencies?.typescript || PACKAGE_JSON.devDependencies?.typescript);
 
-if (isGlobalScript) {
+if (isGlobalScript && process.argv[2] === 'postinstall') {
   const readline = require('readline');
 
   const rl = readline.createInterface({
