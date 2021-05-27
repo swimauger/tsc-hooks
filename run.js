@@ -17,7 +17,7 @@ if (isGlobalScript && process.argv[2] === 'postinstall') {
   rl.question('In order to use tsc-hooks typescript must be installed as a devDependency. To install, type y/N:', (answer) => {
     if (!answer || answer.toLowerCase() === 'y') {
       execSync('npm i typescript --save-dev --no-package-lock');
-      script(path.resolve(process.cwd(), 'node_modules/typescript/bin/tsc'));
+      script(path.resolve(process.cwd(), '../typescript/bin/tsc'));
       rl.close();
     } else {
       throw `Must install typescript either as a dependency or devDependency of this project.
@@ -25,5 +25,5 @@ Run: npm i typescript --save-dev # or npm i typescript`;
     }
   });
 } else {
-  script(path.resolve(process.cwd(), 'node_modules/typescript/bin/tsc'));
+  script(path.resolve(process.cwd(), '../typescript/bin/tsc'));
 }
