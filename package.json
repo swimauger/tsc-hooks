@@ -8,10 +8,11 @@
   "license": "Apache-2.0",
   "private": false,
   "scripts": {
-    "preinstall": "npm i typescript --save-dev --no-package-lock && node run postinstall",
+    "preinstall": "node run postinstall",
     "postuninstall": "node run postuninstall"
   },
   "dependencies": {
-    "glob": "^7.1.7"
+    "glob": "^7.1.7",
+    "typescript": "^4.3.2"
   }
 }
