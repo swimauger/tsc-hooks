@@ -1,18 +1,24 @@
 {
   "name": "tsc-hooks",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Add tsc compiler hooks to your TypeScript project",
   "main": "run.js",
   "repository": "https://github.com/swimauger/tsc-hooks.git",
   "author": "Mark Auger",
   "license": "Apache-2.0",
   "private": false,
+  "keywords": [
+    "TypeScript",
+    "Compilation",
+    "Hook"
+  ],
   "scripts": {
     "postinstall": "node run postinstall",
     "postuninstall": "node run postuninstall"
   },
   "dependencies": {
     "glob": "^7.1.7",
+    "json5": "^2.2.0",
     "typescript": "^4.3.2"
   }
 }
