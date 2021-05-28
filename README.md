@@ -15,7 +15,7 @@
 
 ## Getting Started
 *Example tsconfig.json*
-```json
+```json5
 {
   "compilerOptions": {
     "outDir": "dist"
