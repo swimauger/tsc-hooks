@@ -1,4 +1,5 @@
 const glob = require('glob');
+const globParent = require('glob-parent');
 const path = require('path');
 const fs = require('fs');
 
@@ -7,25 +8,28 @@ module.exports = (tsconfig, tsconfigPath) => {
     const tsconfigDir = path.dirname(tsconfigPath);
     const include = tsconfig.include?.map(file => path.resolve(tsconfigDir, file));
     const ignore = tsconfig.exclude?.map(file => path.resolve(tsconfigDir, file));
+    const outDir = tsconfig.compilerOptions.outDir;
 
-    const files = include?.reduce((files, file) => glob.sync(file, { ignore }), []) || [];
-    for (const file of files) {
-      if (file.endsWith('.js') || file.endsWith('.ts')) continue;
+    for (let includePattern of include) {
+      const files = glob.sync(includePattern, { ignore });
+      const includeDir = globParent(includePattern);
+      for(const file of files) {
+        if ((file.endsWith('.js') && !tsconfig.allowJs) || file.endsWith('.ts')) continue;
+        const relative = file.slice(includeDir.length);
+        const target = path.join(outDir, relative);
 
-      const relative = file.replace(path.resolve(file, path.relative(file, tsconfigDir)), '').split('/').splice(2).join('/');
-      const target = path.resolve(tsconfigDir, tsconfig.compilerOptions.outDir, relative);
-
-      if (!fs.existsSync(path.dirname(target))) {
-        fs.mkdirSync(path.dirname(target), { recursive: true });
-      }
-
-      if (fs.lstatSync(file).isDirectory() && !fs.existsSync(target)) {
-        fs.mkdirSync(target, { recursive: true });
-      }
-
-      if (fs.lstatSync(file).isFile()) {
-        const fileContent = fs.readFileSync(file);
-        fs.writeFileSync(target, fileContent);
+        if (!fs.existsSync(path.dirname(target))) {
+          fs.mkdirSync(path.dirname(target), { recursive: true });
+        }
+  
+        if (fs.lstatSync(file).isDirectory() && !fs.existsSync(target)) {
+          fs.mkdirSync(target, { recursive: true });
+        }
+  
+        if (fs.lstatSync(file).isFile()) {
+          const fileContent = fs.readFileSync(file);
+          fs.writeFileSync(target, fileContent);
+        }
       }
     }
   });
