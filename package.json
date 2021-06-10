@@ -1,6 +1,6 @@
 {
   "name": "@jambdev/tsc-hooks",
-  "version": "1.0.6",
+  "version": "1.0.7-0",
   "description": "Add tsc compiler hooks to your TypeScript project",
   "main": "run.js",
   "repository": "https://github.com/JambDev/tsc-hooks.git",
