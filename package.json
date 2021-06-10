@@ -1,5 +1,5 @@
 {
-  "name": "tsc-hooks",
+  "name": "@jambdev/tsc-hooks",
   "version": "1.0.6",
   "description": "Add tsc compiler hooks to your TypeScript project",
   "main": "run.js",
