@@ -6,7 +6,7 @@ module.exports = (TSC_BIN_PATH) => {
 
   const script = [
     '#!/usr/bin/env node',
-    `require(${JSON.stringify(path.relative(path.dirname(TSC_BIN_PATH), INJECTION_PATH))})`,
+    `require('${path.relative(path.dirname(TSC_BIN_PATH), INJECTION_PATH).replace(/\\/g, '/')}')`,
     "require('../lib/tsc.js')"
   ];
 
