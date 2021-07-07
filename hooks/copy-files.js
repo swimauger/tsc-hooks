@@ -10,7 +10,7 @@ module.exports = (tsconfig, tsconfigPath) => {
 
     const files = include?.reduce((files, file) => glob.sync(file, { ignore }), []) || [];
     for (const file of files) {
-      if ((!tsconfig.hookOptions?.allowJS && file.endsWith('.js')) || (!tsconfig.hookOptions?.allowTS && file.endsWith('.ts'))) continue;
+      if (file.endsWith('.js') || (!tsconfig.hookOptions?.allowTS && file.endsWith('.ts'))) continue;
 
       const relative = file.replace(path.resolve(file, path.relative(file, tsconfigDir)), '').split('/').splice(2).join('/');
       const target = path.resolve(tsconfigDir, tsconfig.compilerOptions.outDir, relative);
