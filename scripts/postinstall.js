@@ -1,5 +1,5 @@
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
 module.exports = (TSC_BIN_PATH) => {
   const INJECTION_PATH = path.resolve(__dirname, '../lib/injection');
