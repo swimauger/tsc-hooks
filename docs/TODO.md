@@ -1,7 +1,7 @@
-- Pass tsc flag options as arguments to hooks
 - Only cache hooks that are requested, then take from GitHub/put hooks in npmignore
-- Add third party hook capability
 - Create Contribution Docs and make a create-hook script
 - Add lintr
 - Add testing
 - Add GitHub actions
+- Allow asynchronous calls
+- Find a way to tell editors to ignore the property
