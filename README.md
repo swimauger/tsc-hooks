@@ -8,10 +8,11 @@
 ![](https://img.shields.io/github/license/swimauger/tsc-hooks?color=FFFFFF&style=for-the-badge)
 
 ## **Installation**
+*tsc-hooks is going through major architectural changes to support many new features. For now, it is best to stick with the most recent stable release, v1.0.9. Future stable updates will be completely cross compatible with pre v1.1.0, so no worries about upgrading in the future.*
 #### **For Project Specific `tsc`:**
-`yarn add tsc-hooks --dev`
+`yarn add tsc-hooks@1.0.9 --dev`
 #### **For Global `tsc`:**
-`yarn global add tsc-hooks`
+`yarn global add tsc-hooks@1.0.9`
 
 ## Getting Started
 *Example tsconfig.json*
