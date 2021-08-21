@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowTs": true
+  },
+  "include": [ "**/*" ],
+  "exclude": [ "*.txt", "markup/*.md", "node_modules", "node_modules/**/*" ],
+  "hooks": [ "copy-files" ]
+}
