@@ -1,7 +1,7 @@
 - Only cache hooks that are requested, then take from GitHub/put hooks in npmignore
 - Create Contribution Docs and make a create-hook script
 - Add lintr
-- Add testing
 - Add GitHub actions
 - Allow asynchronous calls
 - Find a way to tell editors to ignore the property
+- Add Babel to target lower version
