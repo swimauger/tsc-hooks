@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "message": "Hello World",
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "hooks": [ "example" ]
+}
