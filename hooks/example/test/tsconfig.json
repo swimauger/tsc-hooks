@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "message": "Hello World",
-    "rootDir": ".",
     "outDir": "dist"
   },
+  "message": "INIT MESSAGE",
   "hooks": [ "example" ]
 }

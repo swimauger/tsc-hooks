@@ -1,45 +1,41 @@
 module.exports = {
   dependencies: [ 'glob' ],
-  config: [ 'compilerOptions.allowTs' ],
-  arguments: {
-    copyFiles: [ 'cf', 'copy-files' ],
-    excludeFiles: [ 'ef', 'exclude-files' ]
+  onInitCompilation: function(api) {
+    // This will ensure the unsupported allowTs attribute is ignored
+    api.tsconfig.ignore('compilerOptions.allowTs');
   },
-  onPostCompilation: function() {
+  onPostCompilation: function(api) {
     const path = require('path');
     const fs = require('fs');
+    const glob = require('glob');
+    const cwd = api.tsconfig?.compilerOptions?.rootDir || api.tsconfig.directory;
+    const rootRegex = /^([^\/|\\])+/;
+    const outDir = api.tsconfig?.compilerOptions?.outDir;
 
-    const include = this.tsconfig.include?.map(file => path.resolve(this.tsconfigDir, file));
-    if (this.args.copyFiles) {
-      include.push(...this.args.copyFiles?.split(' ')?.map(file => path.resolve(process.cwd(), file.trim())));
-    }
-
-    const ignore = this.tsconfig.exclude?.map(file => path.resolve(this.tsconfigDir, file));
-    if (this.args.excludeFiles) {
-      ignore.push(...this.args.excludeFiles?.split(' ')?.map(file => path.resolve(process.cwd(), file.trim())));
-    }
-    ignore.push(
-      path.resolve(this.tsconfigDir, this.tsconfig.compilerOptions.outDir),
-      path.resolve(this.tsconfigDir, `${this.tsconfig.compilerOptions.outDir}/**/*`)
-    );
-
-    const files = include?.reduce((files, file) => [ ...files, ...this.glob.sync(file, { ignore })], []) || [];
-    for (const file of files) {
-      if (file.endsWith('.js') || (!this.tsconfig.compilerOptions?.allowTs && file.endsWith('.ts'))) continue;
-
-      const outFile = file.replace(this.tsconfigDir, path.resolve(this.tsconfigDir, this.tsconfig.compilerOptions.outDir));
-
-      if (!fs.existsSync(path.dirname(outFile))) {
-        fs.mkdirSync(path.dirname(outFile), { recursive: true });
+    // Add included files from config
+    const includedFiles = new Set();
+    for (const includedFromConfig of api.tsconfig.include) {
+      const files = glob.sync(includedFromConfig, { cwd });
+      for (const file of files) {
+        includedFiles.add(file);
       }
+    }
 
-      if (fs.lstatSync(file).isDirectory() && !fs.existsSync(outFile)) {
+    // Remove excluded files from config
+    for (const excludedFromConfig of api.tsconfig.exclude) {
+      const files = glob.sync(excludedFromConfig, { cwd });
+      for (const file of files) {
+        includedFiles.delete(file);
+      }
+    }
+
+    // Copy files to outDir
+    for (const file of includedFiles) {
+      const outFile = outDir ? file.replace(rootRegex, outDir) : file;
+      if (fs.lstatSync(file).isDirectory()) {
         fs.mkdirSync(outFile, { recursive: true });
-      }
-
-      if (fs.lstatSync(file).isFile()) {
-        const fileContent = fs.readFileSync(file);
-        fs.writeFileSync(outFile, fileContent);
+      } else if (!file.endsWith('js') || !(file.endsWith('ts') && !api.tsconfig?.compilerOptions?.allowTs)) {
+        fs.copyFileSync(file, outFile);
       }
     }
   }
