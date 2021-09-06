@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["src/fileA.js", "src/index.js"],
+  "exclude": ["node_modules"],
+  "tsc-hooks-permissions": {
+    "./dist/fileA.js": "0244",
+    "./dist/index.js": "0744"
+  },
+  "hooks": ["copy-files", "file-permissions"]
+}
