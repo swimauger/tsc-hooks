@@ -45,6 +45,23 @@
       <td>Mark Auger (<a href="https://github.com/swimauger">swimauger</a>)</td>
     </tr>
     <tr>
+      <td>file-permissions</td>
+      <td>
+        This hook sets permissions to files after <code>tsc</code> has completed.
+        <code>tsconfig.json</code>:</br>
+        <code>
+        ...
+        "hooks": [...,"file-permissions"],
+        "filePermissions": {
+            "./dist/fileA.js": "0244",
+            "./dist/index.js": "0744"
+        }
+        ...
+        </code>
+      </td>
+      <td>Joel (<a href="https://github.com/dderjoel">dderjoel</a>)</td>
+    </tr>
+    <tr>
       <td>&lt;your-hook-id&gt;</td>
       <td>Learn how to create your own hook <a href="./docs/CONTRIBUTING.md">here</a></td>
       <td>&lt;Your name here&gt;</td>
