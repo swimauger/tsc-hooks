@@ -27,6 +27,7 @@
   /* For more hooks look below... */
 }
 ```
+Hooks are executed in the same order as defined in `tsconfig.json`s hook property.
 
 ## Available Hooks
 <table width="100%">
