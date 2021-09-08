@@ -4,7 +4,7 @@
   },
   "include": ["src/fileA.js", "src/index.js"],
   "exclude": ["node_modules"],
-  "tsc-hooks-permissions": {
+  "filePermissions": {
     "./dist/fileA.js": "0244",
     "./dist/index.js": "0744"
   },

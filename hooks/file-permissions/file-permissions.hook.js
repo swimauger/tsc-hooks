@@ -1,4 +1,4 @@
-const PERMISSION_PROPERTY_KEY = "tsc-hooks-permissions";
+const PERMISSION_PROPERTY_KEY = "filePermissions";
 module.exports = {
   dependencies: [],
   onPostCompilation: function (api) {
@@ -35,4 +35,3 @@ module.exports = {
     });
   },
 };
-
