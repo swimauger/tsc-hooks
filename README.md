@@ -30,45 +30,11 @@
 Hooks are executed in the same order as defined in `tsconfig.json`s hook property.
 
 ## Available Hooks
-<table width="100%">
-  <thead>
-    <th>Hook ID</th>
-    <th>Description</th>
-    <th>Author</th>
-  </thead>
-  <tbody>
-    <tr>
-      <td>copy-files</td>
-      <td>
-        <code>tsc</code> does not copy over extra files like .xml, .txt, .html, etc. after compilation.
-        This hook fixes this by copying over files specified in "include". It also ignores files specified in "exclude".
-      </td>
-      <td>Mark Auger (<a href="https://github.com/swimauger">swimauger</a>)</td>
-    </tr>
-    <tr>
-      <td>file-permissions</td>
-      <td>
-        This hook sets permissions to files after <code>tsc</code> has completed.
-        <code>tsconfig.json</code>:</br>
-        <code>
-        ...
-        "hooks": [...,"file-permissions"],
-        "filePermissions": {
-            "./dist/fileA.js": "0244",
-            "./dist/index.js": "0744"
-        }
-        ...
-        </code>
-      </td>
-      <td>Joel (<a href="https://github.com/dderjoel">dderjoel</a>)</td>
-    </tr>
-    <tr>
-      <td>&lt;your-hook-id&gt;</td>
-      <td>Learn how to create your own hook <a href="./docs/CONTRIBUTING.md">here</a></td>
-      <td>&lt;Your name here&gt;</td>
-    </tr>
-  </tbody>
-</table>
+| Hook ID | Description | Author |
+| ------- | ----------- | ------ |
+| copy-files | `tsc` does not copy over extra files like .xml, .txt, .html, etc. after compilation. This hook fixes this by copying over files specified in "include". It also ignores files specified in "exclude". | Mark Auger ([swimauger]( https://github.com/swimauger )) |
+| file-permissions | This hook sets permissions to files after `tsc` has completed.|joel([dderjoel](https://github.com/dderjoel)) |
+| &lt;your-hook-id&gt; | Learn how to create your own hook [here](./docs/CONTRIBUTING.md) | &lt;Your name here&gt; |
 
 ## What Can TSC Hooks Do?
 - TypeScript Compiler hooks are scripts that can execute on compilation of your TypeScript project using `tsc`
