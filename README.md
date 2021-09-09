@@ -27,30 +27,40 @@
   /* For more hooks look below... */
 }
 ```
+Hooks are executed in the same order as defined in `tsconfig.json`s hook property.
 
 ## Available Hooks
-<table width="100%">
-  <thead>
-    <th>Hook ID</th>
-    <th>Description</th>
-    <th>Author</th>
-  </thead>
-  <tbody>
-    <tr>
-      <td>copy-files</td>
-      <td>
-        <code>tsc</code> does not copy over extra files like .xml, .txt, .html, etc. after compilation.
-        This hook fixes this by copying over files specified in "include". It also ignores files specified in "exclude".
-      </td>
-      <td>Mark Auger (<a href="https://github.com/swimauger">swimauger</a>)</td>
-    </tr>
-    <tr>
-      <td>&lt;your-hook-id&gt;</td>
-      <td>Learn how to create your own hook <a href="./docs/CONTRIBUTING.md">here</a></td>
-      <td>&lt;Your name here&gt;</td>
-    </tr>
-  </tbody>
-</table>
+| Hook ID | Description | Author |
+| ------- | ----------- | ------ |
+| copy-files | `tsc` does not copy over extra files like .xml, .txt, .html, etc. after compilation. This hook fixes this by copying over files specified in "include". It also ignores files specified in "exclude". | Mark Auger ([swimauger]( https://github.com/swimauger )) |
+| file-permissions | This hook sets permissions to files after `tsc` has completed.|joel([dderjoel](https://github.com/dderjoel)) |
+| &lt;your-hook-id&gt; | Learn how to create your own hook [here](./docs/CONTRIBUTING.md) | &lt;Your name here&gt; |
+
+
+## Examples
+
+### file-permissions
+
+1. `tsc` compiles `index.ts` to `./dist/index.js`
+1. The `copy-files`-hook will copy the `src/helperProgram.bin` to `./dist/helperProgram.bin`
+1. The `file-permissions`-hook will set the permissions r-xr--r-- to `./dist/{helperProgram.bin, index.js}` (assuming `./src/index.ts` has a shebang like `#!/usr/bin/env node`, one can now execute `./dist/index.js`)
+
+Expample-`tsconfig.json`:
+```json5
+{
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": [ "src/index.ts", "src/helperProgram.bin" ],
+  "exclude": [ "src/**/*.txt" ],
+  "hooks": [ "copy-files", "file-permissions" ] 
+  "filePermissions": {
+    "./dist/helperProgram.bin": "0544",
+    "./dist/index.js": "0544"
+  }
+}
+```
+
 
 ## What Can TSC Hooks Do?
 - TypeScript Compiler hooks are scripts that can execute on compilation of your TypeScript project using `tsc`
