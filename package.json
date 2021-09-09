@@ -18,9 +18,7 @@
     "test": "docker run -it tsc-hooks-test",
     "inspect:tests": "docker run -it tsc-hooks-test bash",
     "build:tests": "docker build . -t tsc-hooks-test",
-    "clean:tests": "docker rmi tsc-hooks-test --force",
-    "publish": "npm publish",
-    "publish:dev": "npm publish --tag dev"
+    "clean:tests": "docker rmi tsc-hooks-test --force"
   },
   "dependencies": {
     "json5": "^2.2.0",
