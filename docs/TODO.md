@@ -6,3 +6,4 @@
 - Find a way to tell editors to ignore custom properties in tsconfig
 - Add Babel to target lower version
 - Add arguments
+- Make tests run locally instead of needing a dev publish
