@@ -51,7 +51,12 @@ module.exports = {
       if (fs.lstatSync(file).isDirectory()) {
         fs.mkdirSync(outFile, { recursive: true });
       } else if (!file.endsWith('js') || !(file.endsWith('ts') && !api.tsconfig?.compilerOptions?.allowTs)) {
-        fs.copyFileSync(file, outFile);
+          const r = /[^\/]*$/;
+          const dir = outFile.replace(r, '');
+          if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+          }
+          fs.copyFileSync(file, outFile);
       }
     }
   }
