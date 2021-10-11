@@ -32,32 +32,30 @@ module.exports = {
     const includedFiles = new Set();
     for (const includedFromConfig of include) {
       const files = glob.sync(includedFromConfig, { cwd });
-      for (const file of files) {
-        includedFiles.add(file);
-      }
+      files.forEach(includedFiles.add.bind(includedFiles));
     }
 
     // Remove excluded files from config
     for (const excludedFromConfig of exclude) {
       const files = glob.sync(excludedFromConfig, { cwd });
-      for (const file of files) {
-        includedFiles.delete(file);
-      }
+      files.forEach(includedFiles.delete.bind(includedFiles));
     }
 
     // Copy files to outDir
     for (const file of includedFiles) {
       const outFile = outDir ? file.replace(rootRegex, outDir) : file;
-      if (fs.lstatSync(file).isDirectory()) {
-        fs.mkdirSync(outFile, { recursive: true });
-      } else if (!file.endsWith('js') || !(file.endsWith('ts') && !api.tsconfig?.compilerOptions?.allowTs)) {
-          const r = /[^\/]*$/;
-          const dir = outFile.replace(r, '');
-          if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-          }
-          fs.copyFileSync(file, outFile);
+
+      if (!fs.lstatSync(file).isFile()) continue;
+      if (file.endsWith('js')) continue;
+      if (file.endsWith('ts') && !api.tsconfig?.compilerOptions?.allowTs) continue;
+
+      const dir = path.dirname(outFile);
+
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
       }
+      
+      fs.copyFileSync(file, outFile);
     }
   }
 }
