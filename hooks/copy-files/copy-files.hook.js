@@ -50,7 +50,7 @@ module.exports = {
       const outFile = outDir ? file.replace(rootRegex, outDir) : file;
       if (fs.lstatSync(file).isDirectory()) {
         fs.mkdirSync(outFile, { recursive: true });
-      } else if (!file.endsWith('js') || !(file.endsWith('ts') && !api.tsconfig?.compilerOptions?.allowTs)) {
+      } else if (!file.endsWith('js') || !((file.endsWith('ts') || file.endsWith('tsx')) && !api.tsconfig?.compilerOptions?.allowTs)) {
         fs.copyFileSync(file, outFile);
       }
     }
