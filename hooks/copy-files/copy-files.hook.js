@@ -26,7 +26,10 @@ module.exports = {
     const glob = require('glob');
     const cwd = api.tsconfig?.compilerOptions?.rootDir || api.tsconfig.directory;
     const rootRegex = /^([^\/|\\])+/;
-    const outDir = api.tsconfig?.compilerOptions?.outDir;
+    let outDir = api.tsconfig?.compilerOptions?.outDir;
+    if (api.tsconfig?.cpDesDir) {
+      outDir = api.tsconfig?.cpDesDir
+    }
 
     // Add included files from config
     const includedFiles = new Set();
